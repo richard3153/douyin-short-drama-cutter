@@ -1,0 +1,28 @@
+# ── Python ──────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.bak
+*.bak.*
+
+# ── 系统/编辑器 ────────────────────────────────────────
+.DS_Store
+*.log
+
+# ── 重资源 / 本地大模型（体积大，不入库，需本地自备）──
+.venv/
+venv/
+models/
+whisper.cpp/
+bgm/
+music.db
+fonts/
+
+# ── 运行时生成目录 ────────────────────────────────────
+logs/
+output_videos/
+raw_videos/
+narration/
+subtitles/
+tmp_frames/
+drama_memory/
+assets/

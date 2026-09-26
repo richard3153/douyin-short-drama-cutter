@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>短剧剪辑工作站</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-grain"></div>
+
+<header>
+  <div class="logo">
+    <span class="logo-icon">🎬</span>
+    <div>
+      <h1>短剧剪辑工作站</h1>
+      <p class="subtitle">批量处理 · 智能剪辑 · AI全自动</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="status-dot" id="statusDot"></span>
+    <span id="statusText">就绪</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- 快捷入口 -->
+  <section class="folder-bar">
+    <button class="folder-btn" onclick="openFolder('raw')">
+      <span class="folder-icon">📁</span>
+      <span>原视频</span>
+      <span class="badge" id="badgeRaw">0</span>
+    </button>
+    <button class="folder-btn" onclick="openFolder('bgm')">
+      <span class="folder-icon">🎵</span>
+      <span>BGM库</span>
+      <span class="badge" id="badgeBgm">0</span>
+    </button>
+    <button class="folder-btn" onclick="openFolder('narration')">
+      <span class="folder-icon">🎙️</span>
+      <span>解说</span>
+      <span class="badge" id="badgeNarr">0</span>
+    </button>
+    <button class="folder-btn" onclick="openFolder('output')">
+      <span class="folder-icon">🎞</span>
+      <span>成片</span>
+      <span class="badge" id="badgeOut">0</span>
+    </button>
+  </section>
+
+  <!-- 剧目选择 -->
+  <section class="drama-section" id="dramaSection">
+    <div class="drama-header">
+      <span class="panel-title">📺 剧目列表</span>
+      <div class="drama-selection-controls">
+        <button class="drama-sel-btn" id="btnSelAll" onclick="selectAllDramas()">全选</button>
+        <button class="drama-sel-btn" id="btnSelNone" onclick="selectNoneDramas()">清空</button>
+        <button class="drama-sel-btn" id="btnSelReverse" onclick="reverseSelectDramas()">反选</button>
+        <span class="drama-sel-count" id="dramaSelCount">已选 0 部</span>
+      </div>
+    </div>
+    <div class="drama-list" id="dramaList">
+      <div class="empty-hint">将视频放入 raw_videos/ 或 raw_videos/剧名/ 目录</div>
+    </div>
+  </section>
+
+  <!-- 素材面板 -->
+  <section class="panels">
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">📁 原视频</span>
+        <span class="panel-count">共 <b id="rawCount">0</b> 个</span>
+      </div>
+      <div class="file-list" id="rawList">
+        <div class="empty-hint">将视频拖入 <code>raw_videos/</code></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">🎵 BGM 库</span>
+        <span class="panel-count">共 <b id="bgmCount">0</b> 首</span>
+      </div>
+      <div class="file-list" id="bgmList">
+        <div class="empty-hint">将BGM放入 <code>bgm/</code></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">🎞️ 成片输出</span>
+        <span class="panel-count">共 <b id="outCount">0</b> 个</span>
+      </div>
+      <div class="file-list" id="outList">
+        <div class="empty-hint">处理完成后出现在这里</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 控制台 -->
+  <section class="console-section">
+    <div class="console-header">
+      <span class="panel-title">📋 处理日志</span>
+      <div class="console-actions">
+        <button class="btn-refresh" onclick="refreshLog()">↻ 刷新</button>
+        <button class="btn-open-out" onclick="openFolder('output')">📂 打开输出</button>
+      </div>
+    </div>
+    <div class="console" id="consoleLog">
+      <div class="log-line log-info">🎬 短剧剪辑工作站 v5.0 · AI全自动剪辑</div>
+    </div>
+  </section>
+
+  <!-- 底部操作 -->
+  <section class="action-bar">
+    <div class="action-buttons">
+      <button class="btn-run" id="btnRun" onclick="runProcessing('main')">
+        <span class="btn-icon">▶</span>
+        <span id="btnText">剪辑正片</span>
+      </button>
+      <button class="btn-run btn-trailer" id="btnTrailer" onclick="runProcessing('trailer')">
+        <span class="btn-icon">🎬</span>
+        <span>剪辑预告片</span>
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  批量处理 · 智能剪辑 · AI全自动
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
