@@ -1,4 +1,4 @@
-# 🎬 抖音短剧 AI 自动剪辑工具
+# 短剧解说自动剪辑工具
 
 > 纯本地运行 · 抖音短剧推广合规 · 批量处理 · 可视化 Web 界面
 
@@ -192,6 +192,54 @@ CONFIG = {
 - **免责声明**：成片底部含「本视频由AI辅助创作，仅供娱乐」。
 
 ---
+
+## Ollama 本地大模型集成
+
+解说脚本由本地部署的 **Ollama** 负责生成（不调用任何云端付费 LLM API）。
+
+### 安装与启动
+
+```bash
+# 1. 安装 Ollama（https://ollama.com），确保本地服务已启动（默认监听 11434）
+ollama serve          # 若未随系统自启
+
+# 2. 拉取解说所用模型（当前默认 qwen3.5:4b）
+ollama pull qwen3.5:4b
+```
+
+### 集成方式（代码层面）
+
+- 统一调用函数 `_call_ollama_retry(prompt, agent_name, timeout=90, retries=2)`，向
+  `http://localhost:11434/api/generate` 发送 POST 请求，请求体示例：
+
+  ```json
+  {
+    "model": "qwen3.5:4b",
+    "prompt": "<清洗后的提示词>",
+    "stream": false,
+    "think": false,
+    "options": { "temperature": 0.5, "num_predict": 2000 }
+  }
+  ```
+
+- **多 Agent 分工**：通过 `agent_name` 区分任务，例如 `narration_viral`（爆款解说生成）、
+  `highlight_detection`（高光片段检测）、`bgm_selection`（BGM 匹配）、`narration_filler`（结尾填充语）等。
+- **结构化输出**：需要 JSON 的场景（如高光检测、反同质化）使用 `"format": "json"` 引导生成。
+- **重试与退避**：调用失败按指数退避重试（等待 3s / 6s），全部失败后返回 `None` 走兜底逻辑。
+- **冷启动预热**：`server.py` 启动时调用 `warmup_ollama()`，先发一个极小请求把模型加载进显存，
+  消除首次调用的冷启动延迟。
+
+### 切换模型 / 调参
+
+- 切换模型：修改 `_call_ollama_retry` 与 `warmup_ollama` 中的 `"model"` 字段
+  （如 `qwen3.5:4b` → 其他已 `ollama pull` 的模型）。
+- 调参：各 Agent 的 `temperature` / `num_predict` 由 `_get_llm_params(agent_name)` 控制，
+  可按任务在源码中调整。
+
+### 常见问题
+
+- Ollama 未启动或 `11434` 不可达 → 解说生成失败，流水线会停止并提示，请先 `ollama serve`。
+- 首次调用慢属正常（模型加载），服务启动后的预热可显著缓解。
 
 ## 技术栈
 
