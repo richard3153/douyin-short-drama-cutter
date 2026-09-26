@@ -58,6 +58,36 @@
 
 ---
 
+## 目录结构
+
+```
+.
+├── ai_short_video_cutter_pro.py   # 主流程（识别→解说→选片→混音→合规）
+├── server.py                      # Web 工作站（端口 8765）
+├── compliance_checker.py          # 6 维合规预检
+├── tts_chattts_wrapper.py         # ChatTTS 封装
+├── asr_whisper_cpp_wrapper.py     # whisper.cpp 封装
+├── config_merger.py               # 三层配置合并
+├── jellyfish_studio.py            # 资产管理器
+├── _lowbiz_detector.py            # 低俗内容检测
+├── index.html / app.js / main.js  # Web 前端
+├── config.json / user_config.json # 运行配置
+├── run.sh / run_gui.sh            # 启动脚本
+├── raw_videos/                    # 原始素材（占位，需自备）
+├── bgm/                           # 背景音乐（占位，需自备）
+├── output_videos/                 # 成品输出（占位）
+├── narration/                     # 解说音频（占位）
+├── subtitles/                     # 字幕（占位）
+├── assets/                        # 运行时生成的资产元数据（占位）
+├── fonts/                         # 字体（占位）
+├── logs/                          # 运行日志（占位）
+├── drama_memory/                  # 多集记忆（占位）
+└── tmp_frames/                    # 临时帧（占位）
+```
+
+带「占位」的目录仅保留结构（内含 `.gitkeep`），**目录内实际文件不入库**，运行时由本地生成或需自备。
+重资源 `.venv/`、`models/`、`whisper.cpp/`（本地大模型）不入库，请本地准备。
+
 ## 环境依赖
 
 - **Python** 3.11+（推荐用 `uv` 管理虚拟环境）

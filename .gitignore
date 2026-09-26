@@ -13,16 +13,25 @@ __pycache__/
 venv/
 models/
 whisper.cpp/
-bgm/
-music.db
-fonts/
 
-# ── 运行时生成目录 ────────────────────────────────────
-logs/
-output_videos/
-raw_videos/
-narration/
-subtitles/
-tmp_frames/
-drama_memory/
-assets/
+# ── 运行时目录：保留目录结构(.gitkeep)，忽略目录内文件 ──
+assets/**
+!assets/.gitkeep
+bgm/**
+!bgm/.gitkeep
+fonts/**
+!fonts/.gitkeep
+logs/**
+!logs/.gitkeep
+narration/**
+!narration/.gitkeep
+output_videos/**
+!output_videos/.gitkeep
+raw_videos/**
+!raw_videos/.gitkeep
+subtitles/**
+!subtitles/.gitkeep
+drama_memory/**
+!drama_memory/.gitkeep
+tmp_frames/**
+!tmp_frames/.gitkeep
